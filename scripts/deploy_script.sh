@@ -6,7 +6,6 @@ if [ -z "$ORG_ID" ] || [ -z "$PROJECT_ID" ]; then
   exit 1
 fi
 
-
 # Cria o diretório .vercel dentro de build/web (se não existir)
 mkdir -p build/web/.vercel
 
@@ -20,8 +19,15 @@ EOL
 
 echo "Arquivo .vercel/project.json criado com sucesso!"
 
+# Definir o ambiente com base na variável de ambiente ENV
+if [ "$ENV" == "production" ]; then
+  ENVIRONMENT="--prod"  # Ambiente de produção
+else
+  ENVIRONMENT="--target=development"  # Ambiente de desenvolvimento/preview (padrão)
+fi
+
 # Autenticar com o token da Vercel
 echo "$VERCEL_TOKEN" | vercel login --token
 
-# Fazer o deploy do diretório build/web para o projeto configurado 
-vercel deploy build/web --prod --token $VERCEL_TOKEN
+# Fazer o deploy do diretório build/web para o ambiente configurado
+vercel deploy build/web $ENVIRONMENT --token $VERCEL_TOKEN
