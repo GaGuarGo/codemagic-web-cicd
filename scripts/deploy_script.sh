@@ -23,7 +23,7 @@ echo "Arquivo .vercel/project.json criado com sucesso!"
 if [ "$ENV" == "production" ]; then
   ENVIRONMENT="--prod"  # Ambiente de produção
 else
-  ENVIRONMENT="--target=development"  # Ambiente de desenvolvimento/preview (padrão)
+  ENVIRONMENT=""  # Ambiente de desenvolvimento/preview (padrão)
 fi
 
 # Autenticar com o token da Vercel
